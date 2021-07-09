@@ -1,5 +1,5 @@
 # proglang1
-This Repository contains the projects created for the programming course "Programming Languages 1" (6th Semester at the Computer Software track) at the school of Electrical and Computer Engineering in the National Technical University of Athens.
+This Repository contains the projects created for the programming course **"Programming Languages 1"** (6th Semester at the Computer Software track) at the school of Electrical and Computer Engineering in the National Technical University of Athens.
 
 During that course, I learned :
 
@@ -7,6 +7,8 @@ During that course, I learned :
 
 2.Basic syntax features like grammars etc.
 
-3.Multiple programming language paradigms and their functionalities like functional, object-oriented, scripting and logical programming languages
+3.Multiple programming language paradigms and their functionalities like **functional, object-oriented, scripting and logical programming languages**
 
-4.Learned the following programming languages : Standard ML, OCaml, Python, Prolog and Java.
+4.Learned the following programming languages : **Standard ML**, **OCaml**, **Python**, **Prolog** and **Java**.
+
+The course's site is : https://courses.softlab.ntua.gr/pl1/2021a/ (in greek) 
