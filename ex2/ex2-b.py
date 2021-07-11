@@ -67,7 +67,7 @@ def execute(path,stores,visited,q111) :
   # q kai s idia me prin 
     
    (q1,s1) = stores[oldpath]
-   
+   #copy queue & stack
    q = q1.copy()
    s = s1.copy()
 
