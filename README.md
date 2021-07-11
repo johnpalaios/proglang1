@@ -17,6 +17,11 @@ During that course, I learned :
 
   * Multiple programming language paradigms and their functionalities like **functional, object-oriented, scripting and logical programming languages**
 
-  * Learned the following programming languages : **Standard ML**, **OCaml**, **Python**, **Prolog** and **Java**.
+  * Learned the following programming languages : 
+    * **Standard ML**
+    * **OCaml**
+    *  **Python**
+    *  **Prolog** 
+    *  **Java**
 
 The course's site is : https://courses.softlab.ntua.gr/pl1/2021a/ (in greek) 
