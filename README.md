@@ -1,7 +1,7 @@
 # proglang1
 This Repository contains the projects created for the programming course "[Programming Languages 1](https://courses.softlab.ntua.gr/pl1/2021a/)" (6th Semester at the Computer Software track) at the school of Electrical and Computer Engineering in the National Technical University of Athens.
 
-**Contents:**    (in greek)
+**Exercise Statements:**    (in greek)
 
   * [Exercise 1](https://courses.softlab.ntua.gr/pl1/2021a/Exercises/exer21-1.pdf)
   
