@@ -9,6 +9,7 @@ if (r*c) > 900 :
 
 #visited -> boolean arrays that stores 
 #           True if we visited
+#           and false if we didnt
 visited = [[False]*c for _ in range(r)]
 
 #b -> int array that stores 
