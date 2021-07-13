@@ -10,6 +10,7 @@ public class Methods {
         Collections.sort(sortedlist);
         return sortedlist;
     }
+
     public static boolean isSorted(List<Integer> list) {
         List<Integer> sortedlist = new ArrayList<Integer>(list);
         Collections.sort(sortedlist);
@@ -71,10 +72,10 @@ public class Methods {
         }
     }
 
-    public static char stringPop(StringBuffer stringBuffer) {
-        char returnCharacter = stringBuffer.charAt(0);
-        stringBuffer.delete(0, 1);
-        return returnCharacter;
+    public static StringBuffer stringPop( List<String> q ) {
+        StringBuffer returnSB = new StringBuffer(q.get(0));
+        q.remove(0);
+        return returnSB;
     }
 
     public static int stackPop(List<Integer> list) {
@@ -93,18 +94,12 @@ public class Methods {
         return returnInteger;
     }
 
-    static int dequeueCounter = 0;
     public static boolean moveQ1 (List<Integer> q, List<Integer> s) {
         if(q.isEmpty()) {
             return false;
         }
         else {
-            //s.push(q.queueDequeue());
-            System.out.println("This is the counter : " + dequeueCounter++);
-            //System.out.print("This is q : " );
-            //printList(q);
-            //System.out.print("This is s : " );
-            //printList(s);
+
             int dequeueValue = dequeue(q);
             s.add(dequeueValue);
             return true;
@@ -116,20 +111,17 @@ public class Methods {
             return false;
         }
         else {
-            System.out.println("This is the counter : " + dequeueCounter++);
-            //System.out.print("This is q : " );
-            //printList(q);
-            //System.out.print("This is s : " );
-            //printList(s);
             q.add(stackPop(s));
             return true;
         }
     }
-
+    static int executeCounter = 0;
     public static void execute(StringBuffer path, HashMap<String, Pair> stores
                                , HashSet<Pair> visited, StringBuffer q111
                                , List<Integer> sortedQueue) {
 
+        System.out.println("This is executeCounter : " + executeCounter++);
+        System.out.println("This is the path : " + path);
         int size = path.length(); // size of current path
         StringBuffer oldPath = new StringBuffer(path.substring(0,size-1));
 
@@ -158,20 +150,21 @@ public class Methods {
         }
 
         Pair tuple1 = new Pair(List.copyOf(q)
-                , List.copyOf(s));
+                            , List.copyOf(s));
+
         stores.put(path.toString(), tuple1);
         if (!visited.contains(tuple1)) {
             visited.add(tuple1);
-            if (!q.isEmpty() && !s.isEmpty()) {
+            if (q.size() != 0 && s.size() != 0) {
                 if (q.get(0) == s.get(s.size() - 1)) {
                     q111.append(path + "Q");
                     return;
                 }
             }
-           if (!q.isEmpty()) {
+           if (q.size() != 0) {
                q111.append(path + "Q");
            }
-           if (!s.isEmpty()) {
+           if (s.size() != 0) {
                 q111.append(path + "S");
             }
         }
@@ -181,18 +174,34 @@ public class Methods {
                                            HashSet<Pair> visited,
                                            List<Integer> sortedQueue) {
         // maintain a queue of paths
-        StringBuffer q = new StringBuffer("Q");
+        List<String> q = new ArrayList<String>();
+        q.add("Q");
         // k=0
-        while(!q.isEmpty()) {
-            int size = q.length();
-            StringBuffer path = new StringBuffer(); // this is the return string
+        int k = 0;
+        while(q.size() != 0) {
+            k++;
+
+            List<StringBuffer> path = new ArrayList<StringBuffer>(); // this is the return string
             StringBuffer q1 = new StringBuffer();
-            for(int i = 0; i < size; i++) {
-                path.append(Methods.stringPop(q));
+
+            System.out.println(k);
+            for(int i = 0; i < q.size(); i++) {
+                path.add(Methods.stringPop(q));
                 execute(path, stores, visited, q1, sortedQueue);
             }
-            q = q1;
+            copyStringBuffer(q1,q);
         }
 
     }
+
+    public static void copyStringBuffer(StringBuffer copy, StringBuffer paste) {
+        paste.delete(0, paste.length());
+
+        for(int i = 0; i < copy.length(); i++) {
+            paste.append(copy.charAt(i));
+        }
+    }
 }
+// I changed from q : StringBuffer to q : List<String>
+// its easy to convert from StringBuffer to String using append() method
+// and the other way around using .toString() method

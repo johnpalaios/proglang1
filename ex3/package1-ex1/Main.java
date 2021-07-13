@@ -56,27 +56,8 @@ public class Main {
 
             stores.put("Q",tuple1);
 
-            //Methods.printHashSet(visited);
-            //Methods.printHashMap(stores);
-
             Methods.breadthFirstSearch (stores, visited, sortedQueue);
 
-            /*
-            List<Integer> mordor = new ArrayList<Integer>(Arrays.asList(1, 2, 3));
-            System.out.println(Methods.dequeue(mordor));
-            System.out.println(Methods.dequeue(mordor));
-            Methods.printList(mordor);
-            }
-            */
-            /*
-            List<Integer> queue = new ArrayList<Integer>(Arrays.asList(7, 17, 3, 42));
-            List<Integer> stack = new ArrayList<Integer>();
-            Methods.moveQ1(queue,stack);
-            Methods.moveQ1(queue,stack);
-            Methods.moveS1(queue,stack);
-            Methods.moveQ1(queue,stack);
-            Methods.moveS1(queue,stack);
-            */
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
