@@ -1,3 +1,4 @@
+# first the input
 import sys
 with open(sys.argv[1], 'r') as f:
     r, c = [int(x) for x in next(f).split()]
