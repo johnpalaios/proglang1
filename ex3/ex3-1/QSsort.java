@@ -1,13 +1,7 @@
-package com.package1;
-import java.io.*;
-import java.util.Scanner;
-import java.io.File;
-import java.util.HashMap;
-import java.util.*;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+package com.package6;
 
+import java.io.*;
+import java.util.*;
 
 public class QSsort {
     public static void main(String[] args) {
@@ -16,48 +10,48 @@ public class QSsort {
             File myObj = new File(nameOfFile);
             Scanner myReader = new Scanner(myObj); // file = myObj to be scanned
             int size = myReader.nextInt();
-            Queue q = new Queue();
-            Stack s = new Stack();
+            ZQueue q = new ZQueue();
+            ZStack s = new ZStack();
 
             while (myReader.hasNextInt()) {
                 int data = myReader.nextInt();
-                Queue.enqueue(data);
+                ZQueue.enqueue(data);
             }
-            if(Queue.isEmpty()) {
+            if(ZQueue.isEmpty()) {
                 System.out.println("Queue is empty");
                 return;
             }
-            if(Methods.isSorted(Queue.queueList)) {
+            if(ZMethods.isSorted(ZQueue.queueList)) {
                 System.out.println("empty");
                 System.exit(1);
             }
-            HashSet<Pair> visited = new HashSet<>(); // visited : HashSet of Pairs
+            HashSet<Zpair> visited = new HashSet<>(); // visited : HashSet of Pairs
 
-            HashMap<String, Pair> stores
-                    = new HashMap<String, Pair>();   // stores : HashMap of 'Path' : Pair
+            HashMap<String, Zpair> stores
+                    = new HashMap<String, Zpair>();   // stores : HashMap of 'Path' : Pair
 
             //Queue.printQueue();
             //Stack.printStack();
 
             // tuple = ([17, 3, 42, 7], Empty)
-            Pair tuple = new Pair(List.copyOf(Queue.queueList)
-                                 , List.copyOf(Stack.stackList));
+            Zpair tuple = new Zpair(ZMethods.listCopyOfIntegers(ZQueue.queueList)
+                    , ZMethods.listCopyOfIntegers(ZStack.stackList));
             List<Integer> sortedQueue = new ArrayList<Integer>(
-                    Methods.returnSorted(Queue.queueList)
+                    ZMethods.returnSorted(ZQueue.queueList)
             );
             visited.add(tuple);
             stores.put("",tuple);
 
             //Methods.printHashSet(visited);
-            Methods.moveQ1(Queue.queueList,Stack.stackList);
+            ZMethods.moveQ1(ZQueue.queueList, ZStack.stackList);
 
             // tuple1 = ([3, 42, 7], [17])
-            Pair tuple1 = new Pair(List.copyOf(Queue.queueList)
-                    , List.copyOf(Stack.stackList));
+            Zpair tuple1 = new Zpair(ZMethods.listCopyOfIntegers(ZQueue.queueList)
+                    , ZMethods.listCopyOfIntegers(ZStack.stackList));
 
             stores.put("Q",tuple1);
 
-            Methods.breadthFirstSearch (stores, visited, sortedQueue);
+            ZMethods.breadthFirstSearch (stores, visited, sortedQueue);
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
