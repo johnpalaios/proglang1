@@ -9,9 +9,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class Main {
+public class QSsort {
     public static void main(String[] args) {
-        String nameOfFile = "qs1.txt";
+        String nameOfFile = args[0];
         try {
             File myObj = new File(nameOfFile);
             Scanner myReader = new Scanner(myObj); // file = myObj to be scanned
@@ -29,6 +29,7 @@ public class Main {
             }
             if(Methods.isSorted(Queue.queueList)) {
                 System.out.println("empty");
+                System.exit(1);
             }
             HashSet<Pair> visited = new HashSet<>(); // visited : HashSet of Pairs
 

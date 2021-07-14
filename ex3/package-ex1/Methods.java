@@ -5,6 +5,17 @@ import java.util.Map;
 import java.util.List;
 
 public class Methods {
+
+    public static void copyStringBuffer(List<String> copy, List<String> paste) {
+
+        for(int i = 0; i < paste.size(); i++) {
+            paste.remove(i);
+        }
+        for(int i = 0; i < copy.size(); i++) {
+            paste.add(copy.get(i));
+        }
+    }
+
     public static List<Integer> returnSorted(List<Integer> list) {
         List<Integer> sortedlist = new ArrayList<Integer>(list);
         Collections.sort(sortedlist);
@@ -16,6 +27,7 @@ public class Methods {
         Collections.sort(sortedlist);
         return list.equals(sortedlist);
     }
+
     public static void printHashSet(HashSet<Pair> hs) {
         System.out.print("{ ");
         for (Pair pair : hs) {
@@ -47,7 +59,7 @@ public class Methods {
         }
     }
 
-    public static void printList(List<Integer> list) {
+    public static void printList(List<?> list) {
         if(list.size() > 0) {
             System.out.print("[");
             for (int i = 0; i < list.size() - 1; i++) {
@@ -115,13 +127,14 @@ public class Methods {
             return true;
         }
     }
-    static int executeCounter = 0;
+
+    //public static int executeCounter = 0;
     public static void execute(StringBuffer path, HashMap<String, Pair> stores
-                               , HashSet<Pair> visited, StringBuffer q111
+                               , HashSet<Pair> visited, List<String> q111
                                , List<Integer> sortedQueue) {
 
-        System.out.println("This is executeCounter : " + executeCounter++);
-        System.out.println("This is the path : " + path);
+        //System.out.println("  " + executeCounter++);
+        //System.out.println("This is the path : " + path);
         int size = path.length(); // size of current path
         StringBuffer oldPath = new StringBuffer(path.substring(0,size-1));
 
@@ -142,8 +155,8 @@ public class Methods {
         }
         if (size % 2 == 0) {
             if (q.equals(sortedQueue)) {
-                  printList(q);
-                  printList(s);
+                  //printList(q);
+                  //printList(s);
                   System.out.println(path);
                   System.exit(1);
             }
@@ -157,18 +170,20 @@ public class Methods {
             visited.add(tuple1);
             if (q.size() != 0 && s.size() != 0) {
                 if (q.get(0) == s.get(s.size() - 1)) {
-                    q111.append(path + "Q");
+                    q111.add(path + "Q");
                     return;
                 }
             }
            if (q.size() != 0) {
-               q111.append(path + "Q");
+               q111.add(path + "Q");
            }
            if (s.size() != 0) {
-                q111.append(path + "S");
+                q111.add(path + "S");
             }
+           //printList(q111);
         }
     }
+
 
     public static void breadthFirstSearch (HashMap<String, Pair> stores,
                                            HashSet<Pair> visited,
@@ -177,30 +192,26 @@ public class Methods {
         List<String> q = new ArrayList<String>();
         q.add("Q");
         // k=0
-        int k = 0;
+        //int k = 0;
         while(q.size() != 0) {
-            k++;
-
+            //if(k == 21) {
+            //    System.exit(20);
+            // }
             List<StringBuffer> path = new ArrayList<StringBuffer>(); // this is the return string
-            StringBuffer q1 = new StringBuffer();
-
-            System.out.println(k);
-            for(int i = 0; i < q.size(); i++) {
+            List<String> q1 = new ArrayList<String>();
+            int size = q.size();
+            //System.out.println(k);
+            for(int i = 0; i < size; i++) {
+                //printList(q);
                 path.add(Methods.stringPop(q));
-                execute(path, stores, visited, q1, sortedQueue);
+                execute(path.get(i), stores, visited, q1, sortedQueue);
             }
             copyStringBuffer(q1,q);
+            //k++;
         }
 
     }
 
-    public static void copyStringBuffer(StringBuffer copy, StringBuffer paste) {
-        paste.delete(0, paste.length());
-
-        for(int i = 0; i < copy.length(); i++) {
-            paste.append(copy.charAt(i));
-        }
-    }
 }
 // I changed from q : StringBuffer to q : List<String>
 // its easy to convert from StringBuffer to String using append() method
