@@ -32,7 +32,14 @@ public class Round {
                     differenceArray[i] = ZMethods.findDistance(carInCity, finalPositions[i]);
             }
             //differenceArray contains the difference of FinalCityNumber - StartingCarInCityNumber
-            System.out.println(Arrays.deepToString(differenceArray));
+            //System.out.println(Arrays.deepToString(differenceArray));
+            //check if differenceArray is correct
+
+            //1.All that is left is to find the max & sum
+            //for every pair(finalPositions - carInCity)
+            //2.Find which max & sum pairs are accepted
+            //3.Find min and the accepted sum & it's index
+            //4.Return that solution
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
