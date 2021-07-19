@@ -32,7 +32,7 @@ public class Round {
                     differenceArray[i] = ZMethods.findDistance(carInCity, finalPositions[i]);
             }
             //differenceArray contains the difference of FinalCityNumber - StartingCarInCityNumber
-            //System.out.println(Arrays.deepToString(differenceArray));
+            System.out.println(Arrays.deepToString(differenceArray));
             //check if differenceArray is correct
 
             //1.All that is left is to find the max & sum
@@ -40,6 +40,22 @@ public class Round {
             //2.Find which max & sum pairs are accepted
             //3.Find min and the accepted sum & it's index
             //4.Return that solution
+
+            int sumOfDifferenceArray[] = new int[numberOfCities];
+            for(int i = 0; i < numberOfCities; i++) {
+                sumOfDifferenceArray[i] = ZMethods.findSumOfList(differenceArray[i]);
+            }
+
+            int maxOfDifferenceArray[] = new int[numberOfCities];
+            for(int i = 0; i < numberOfCities; i++) {
+                maxOfDifferenceArray[i] = ZMethods.findMaxOfList(differenceArray[i]);
+            }
+            System.out.println("This is the list of sums "
+                              + Arrays.toString(sumOfDifferenceArray));
+            System.out.println("This is the list of maxes "
+                    + Arrays.toString(maxOfDifferenceArray));
+            System.out.println("This is the result : "
+                    + Arrays.toString(ZMethods.findCityAndSteps(sumOfDifferenceArray,maxOfDifferenceArray)));
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
