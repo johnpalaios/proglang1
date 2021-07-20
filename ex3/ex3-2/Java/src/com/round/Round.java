@@ -33,7 +33,7 @@ public class Round {
                                                                 ,i, numberOfCities);
             }
             //differenceArray contains the difference of FinalCityNumber - StartingCarInCityNumber
-            System.out.println(Arrays.deepToString(differenceArray));
+            //System.out.println(Arrays.deepToString(differenceArray));
             //check if differenceArray is correct
 
             //1.All that is left is to find the max & sum
@@ -51,12 +51,18 @@ public class Round {
             for(int i = 0; i < numberOfCities; i++) {
                 maxOfDifferenceArray[i] = ZMethods.findMaxOfList(differenceArray[i]);
             }
+            /*
             System.out.println("This is the list of sums "
                               + Arrays.toString(sumOfDifferenceArray));
             System.out.println("This is the list of maxes "
                     + Arrays.toString(maxOfDifferenceArray));
             System.out.println("This is the result : "
                     + Arrays.toString(ZMethods.findCityAndSteps(sumOfDifferenceArray,maxOfDifferenceArray)));
+            */
+            int result[] = ZMethods.findCityAndSteps(sumOfDifferenceArray,maxOfDifferenceArray);
+            System.out.print(result[0]);
+            System.out.print(" ");
+            System.out.println(result[1]);
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
