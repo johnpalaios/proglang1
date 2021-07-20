@@ -29,7 +29,8 @@ public class Round {
             }
             int differenceArray[][] = new int[numberOfCities][numberOfCars];
             for(int i = 0; i < numberOfCities; i++) {
-                    differenceArray[i] = ZMethods.findDistance(carInCity, finalPositions[i]);
+                    differenceArray[i] = ZMethods.findDistance(carInCity, finalPositions[i]
+                                                                ,i, numberOfCities);
             }
             //differenceArray contains the difference of FinalCityNumber - StartingCarInCityNumber
             System.out.println(Arrays.deepToString(differenceArray));
