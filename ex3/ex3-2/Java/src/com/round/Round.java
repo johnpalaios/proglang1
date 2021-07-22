@@ -1,7 +1,6 @@
 package com.round;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
 public class Round {
@@ -9,10 +8,21 @@ public class Round {
     public static void main(String[] args) {
         String nameOfFile = args[0];
         try {
+            //FileReader myObj = new FileReader(nameOfFile);
+            //BufferedReader myReader = new BufferedReader(myObj);
             File myObj = new File(nameOfFile);
             Scanner myReader = new Scanner(myObj); // file = myObj to be scanned
+
+
             int numberOfCities = myReader.nextInt(); // numberOfCities == N
             int numberOfCars = myReader.nextInt(); // numberOfCars == K
+            //System.out.println(numberOfCities);
+            //System.out.println(numberOfCars);
+
+            //System.out.println(i);
+            //System.out.println(firstLine);
+            //System.out.println(secondLine);
+
             int carInCity[] = new int[numberOfCars]; // carInCity[Car Number]
                                                      // = City in Which the Car is Located
             for(int i = 0; i < numberOfCars; i++) {
@@ -64,7 +74,8 @@ public class Round {
             System.out.print(" ");
             System.out.println(result[1]);
 
-        } catch (FileNotFoundException e) {
+
+        } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
