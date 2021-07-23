@@ -1,4 +1,4 @@
-package com.round;
+package Round;
 
 import java.io.*;
 import java.util.*;
@@ -24,7 +24,7 @@ public class Round {
             //System.out.println(secondLine);
 
             int carInCity[] = new int[numberOfCars]; // carInCity[Car Number]
-                                                     // = City in Which the Car is Located
+            // = City in Which the Car is Located
             for(int i = 0; i < numberOfCars; i++) {
                 carInCity[i] = myReader.nextInt();
                 if(carInCity[i] > numberOfCities) {
@@ -39,8 +39,11 @@ public class Round {
             }
             int differenceArray[][] = new int[numberOfCities][numberOfCars];
             for(int i = 0; i < numberOfCities; i++) {
-                    differenceArray[i] = ZMethods.findDistance(carInCity, finalPositions[i]
-                                                                ,i, numberOfCities);
+                differenceArray[i] = ZMethods.findDistance(carInCity, finalPositions[i]
+                        ,i, numberOfCities);
+            }
+            for(int i = 0; i < numberOfCities; i++) {
+                System.out.println(Arrays.toString(differenceArray[i]));
             }
             //differenceArray contains the difference of FinalCityNumber - StartingCarInCityNumber
             //System.out.println(Arrays.deepToString(differenceArray));

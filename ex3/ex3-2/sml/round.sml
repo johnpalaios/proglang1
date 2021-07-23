@@ -51,7 +51,7 @@ fun makeList(j : int, city : int, carInCity2 : int list) =
     if j > numberOfCars-1
     then []
     else if city >= hd carInCity2
-        then city - hd carInCity2 :: makeList(j+1, city, tl carInCity2)
+        then  city - hd carInCity2 :: makeList(j+1, city, tl carInCity2) 
         else numberOfCities - hd carInCity2 + city :: makeList(j+1, city,tl carInCity2)
 
 fun makeListOfLists(i : int, carInCity1 : int list) =
@@ -60,6 +60,8 @@ fun makeListOfLists(i : int, carInCity1 : int list) =
     else []
 
 val gang = makeListOfLists(0, carInCity);
+
+
 (*
 in
 print(Int.toString(numberOfCities));
