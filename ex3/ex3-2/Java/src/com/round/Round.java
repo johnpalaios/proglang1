@@ -65,10 +65,10 @@ public class Round {
             System.out.println("This is the list of sums "
                               + Arrays.toString(sumOfDifferenceArray));
             System.out.println("This is the list of maxes "
-                    + Arrays.toString(maxOfDifferenceArray));
+                    + Arrays.toString(maxOfDifferenceArray));*/
             System.out.println("This is the result : "
                     + Arrays.toString(ZMethods.findCityAndSteps(sumOfDifferenceArray,maxOfDifferenceArray)));
-            */
+            
             int result[] = ZMethods.findCityAndSteps(sumOfDifferenceArray,maxOfDifferenceArray);
             System.out.print(result[0]);
             System.out.print(" ");
