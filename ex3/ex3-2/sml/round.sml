@@ -1,25 +1,5 @@
-(*fun round l =
-let *)
-fun printList1(nil) = ()
-  | printList1(x::xs) = (
-            print(Int.toString(x));
-            print(", ");
-            printList1(xs)
-    );
-fun printList(list : int list) = (
-    print("[");
-    printList1(list);
-    print("]")
-    );
-
-fun printListOfLists(listlist : int list list) =
-    if null listlist 
-    then print "]"
-    else (
-        printList(hd listlist);
-        print ", ";
-        printListOfLists(tl listlist)
-    );
+fun round l =
+let 
 fun parse file =
     let
     (* A function to read an integer from specified input. *)
@@ -42,7 +22,7 @@ fun parse file =
     end
 
 
-val tup = parse "r1.txt";
+val tup = parse l;
 val numberOfCities = #1 tup;
 val numberOfCars = #2 tup;
 val carInCity = #3 tup;
@@ -59,16 +39,70 @@ fun makeListOfLists(i : int, carInCity1 : int list) =
     then makeList(0, i, carInCity1) :: makeListOfLists(i+1, carInCity1)
     else []
 
-val gang = makeListOfLists(0, carInCity);
+fun findSumOfList(list : int list) = 
+    if null list
+    then 0
+    else hd list + findSumOfList(tl list)
 
+fun findSum(listlist : int list list) = 
+    if null listlist
+    then []
+    else findSumOfList(hd listlist) :: findSum(tl listlist)
 
-(*
+fun findMaxOfList(list : int list, max : int) = 
+    if null list
+    then max
+    else if hd list > max 
+         then findMaxOfList(tl list, hd list)
+         else findMaxOfList(tl list, max)
+
+fun findMax(listlist : int list list) = 
+    if null listlist
+    then []
+    else findMaxOfList(hd listlist, 0) :: findMax(tl listlist)
+
+fun findResult1(sums : int list, maxes : int list, 
+                moves : int, city : int) = 
+    if null sums 
+    then (~1,~1)
+    else if moves < hd sums
+         then if 2 * hd maxes < hd sums + 2
+              then (hd sums, city)
+              else findResult1(tl sums, tl maxes
+                               , moves, city+1)
+        else findResult1(tl sums, tl maxes
+                               , moves, city+1)
+
+fun findResult2(sums : int list, maxes : int list, 
+                city : int, resultTuple : int * int) = 
+    if null sums 
+    then resultTuple
+    else if #1 resultTuple > hd sums
+         then if 2 * hd maxes < hd sums + 2
+              then findResult2(tl sums, tl maxes
+              , city+1, (hd sums, city))
+              else findResult2(tl sums, tl maxes
+                               , city+1, resultTuple)
+        else findResult2(tl sums, tl maxes
+                         , city+1, resultTuple)
+
+fun findResult(sums : int list, maxes : int list) = 
+    let
+        val size = numberOfCities;
+        val moves = 0;
+        val tuple1 = findResult1(sums, maxes, moves, 0);
+        val tuple2 = findResult2(sums, maxes, 0, tuple1);
+    in
+        print(Int.toString(#1 tuple2));
+        print " ";
+        print(Int.toString(#2 tuple2));
+        print "\n"
+    end
+
+val differenceList = makeListOfLists(0, carInCity);
+val sumList = findSum(differenceList);
+val maxList = findMax(differenceList);
+
 in
-print(Int.toString(numberOfCities));
-print"\n";
-print(Int.toString(numberOfCars));
-print"\n";
-printList carInCity;
-print"\n";
-printListOfLists gang
-end    *)    
+findResult(sumList, maxList)
+end 

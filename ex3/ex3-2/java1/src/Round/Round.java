@@ -59,18 +59,20 @@ public class Round {
             for(int i = 0; i < numberOfCities; i++) {
                 sumOfDifferenceArray[i] = ZMethods.findSumOfList(differenceArray[i]);
             }
+            System.out.println("SUM : " + Arrays.toString(sumOfDifferenceArray));
 
             int maxOfDifferenceArray[] = new int[numberOfCities];
             for(int i = 0; i < numberOfCities; i++) {
                 maxOfDifferenceArray[i] = ZMethods.findMaxOfList(differenceArray[i]);
             }
+            System.out.println("MAX : " + Arrays.toString(maxOfDifferenceArray));
+
             /*
             System.out.println("This is the list of sums "
                               + Arrays.toString(sumOfDifferenceArray));
             System.out.println("This is the list of maxes "
-                    + Arrays.toString(maxOfDifferenceArray));*/
-            System.out.println("This is the result : "
-                    + Arrays.toString(ZMethods.findCityAndSteps(sumOfDifferenceArray,maxOfDifferenceArray)));
+                    + Arrays.toString(maxOfDifferenceArray));
+             */
 
             int result[] = ZMethods.findCityAndSteps(sumOfDifferenceArray,maxOfDifferenceArray);
             System.out.print(result[0]);
