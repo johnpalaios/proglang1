@@ -70,20 +70,58 @@ getNext([HD|TL], MaxPointer, _, Distance, FinalDistance) :-
     HD \= 0,
     MaxPointer is HD,
     FinalDistance is Distance.
-two_pointer(_,_,[], _, Min, MinCity, FinalMin, FinalMinCity, _,_,_) :-
+
+findMax([], SecondList, Steps, NumberOfCities, Max) :-
+    NewSteps is Steps + 1,
+    findMax(SecondList, SecondList, NewSteps, NumberOfCities, Max).
+
+findMax([0|TL1], SecondList, Steps, NumberOfCities, Max) :-
+    NewSteps is Steps + 1,
+    findMax(TL1, SecondList, NewSteps, NumberOfCities, Max).
+
+findMax([HD1|TL1], SecondList, Steps, NumberOfCities, Max) :-
+    HD1 \= 0,
+    Max is NumberOfCities - Steps.
+ 
+checkRestriction(Sum, Max) :-
+    Sum - Max + 1 =< Max.
+checkIfMin(New, Old) :-
+    Old >= New.
+
+two_pointer(_,_,[], _, Min, MinCity, FinalMin,
+             FinalMinCity, _, _) :-
     FinalMin is Min,
     FinalMinCity is MinCity.
+
+% make the instances where checkIfMin Fails.
+% or change checkIfMin that calls two different
+% version of two_pointer
 two_pointer(Cities, Cars, [HD|TL], NumberOfCities, Min, MinCity
-            , FinalMin, FinalMinCity, Counter, Sum, Max) :-
-    getNext(TL, MaxPointer, CityAndCars, 1, Distance),
-    NewSum is Sum + Cars - Cities * HD.
+            , FinalMin, FinalMinCity, Counter, L) :-
+    %getNext(TL, MaxPointer, CityAndCars, 1, Distance),
+    Counter \= 0,
+    getMax(TL, L, 1, NumberOfCities, NewMax),
+    NewSum is Sum + Cars - Cities * HD,
+    checkRestriction(NewSum,NewMax),
+    checkIfMin(NewSum, Min),
+    NewCounter is Counter + 1,
+    two_pointer(Cities, Cars, TL, NumberOfCities, NewSum, Counter,
+                , FinalMin, FinalMinCity, NewCounter, L).
+
+two_pointer(Cities, Cars, [HD|TL], NumberOfCities, Min, MinCity
+            , FinalMin, FinalMinCity, 0, L) :-
+    %getNext(TL, MaxPointer, CityAndCars, 1, Distance),
+    findSumAndMax([HD|TL], NumberOfCities, 0 , Max, 0, Sum, 0),
+    checkRestriction(Sum, Max),
+    two_pointer(Cities, Cars, TL, NumberOfCities, Sum, 0,
+                , FinalMin, FinalMinCity, 1, L).
+
 round(File) :-
     read_input(File, NumberOfCities, NumberOfCars, CarInCity),
     make_city_list(NumberOfCities, CarInCity, CityAndCars),
-    findSumAndMax(CityAndCars, NumberOfCities, 0 , Max, 0, Sum, 0),
     write(Sum),write(' '),write(Max),write('\n'),
     two_pointers(NumberOfCities, NumberOfCars, CityAndCars
                 , CityAndCars, NumberOfCities, Min, MinCity
-                , 0, Sum, Max),
+                , 0, CityAndCars),
     write(Min),write(' '),write(MinCity).
     
