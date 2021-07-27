@@ -59,7 +59,7 @@ findSumAndMax([HD|TL], NumberOfCities, TempMax, Max,
     NewCounter is Counter +1,
     findSumAndMax(TL, NumberOfCities, NewTempMax, Max,
                   NewTempSum, Sum, NewCounter).
-
+/*
 getNext([], MaxPointer, CityAndCars) :-
     NewDistance is Distance + 1,
     getNext(CityAndCars, MaxPointer, CityAndCars, NewDistance, FinalDistance).
@@ -70,6 +70,7 @@ getNext([HD|TL], MaxPointer, _, Distance, FinalDistance) :-
     HD \= 0,
     MaxPointer is HD,
     FinalDistance is Distance.
+*/
 
 findMax([], SecondList, Steps, NumberOfCities, Max) :-
     NewSteps is Steps + 1,
@@ -79,49 +80,84 @@ findMax([0|TL1], SecondList, Steps, NumberOfCities, Max) :-
     NewSteps is Steps + 1,
     findMax(TL1, SecondList, NewSteps, NumberOfCities, Max).
 
-findMax([HD1|TL1], SecondList, Steps, NumberOfCities, Max) :-
+findMax([HD1|_], _, Steps, NumberOfCities, Max) :-
     HD1 \= 0,
-    Max is NumberOfCities - Steps.
+    Max is NumberOfCities - Steps + 1.
  
-checkRestriction(Sum, Max) :-
-    Sum - Max + 1 =< Max.
-checkIfMin(New, Old) :-
-    Old >= New.
+checkIfMin(New, Old, MinCity, Cities, Cars, TL, _, _
+    , FinalMin, FinalMinCity, NewCounter, L) :-
+    Old < New,
+    two_pointer(Cities, Cars, TL, Old, MinCity,
+                FinalMin, FinalMinCity, NewCounter, L, New).
 
-two_pointer(_,_,[], _, Min, MinCity, FinalMin,
-             FinalMinCity, _, _) :-
+checkIfMin(New, Old, _, Cities, Cars, TL, NewSum, Counter
+    , FinalMin, FinalMinCity, NewCounter, L) :-
+    Old >= New,
+    two_pointer(Cities, Cars, TL, NewSum, Counter
+                , FinalMin, FinalMinCity, NewCounter, L, NewSum).
+
+checkRestriction(Sum, Max) :-
+    Sum + 2 > 2 * Max.
+    %write(Sum),write(' '),write(Max),write(' ').
+
+checkRestrictionNot(Sum, Max) :-
+    Sum + 2 =< 2 * Max.
+
+
+two_pointer(_,_,[], Min, MinCity, FinalMin,
+             FinalMinCity, _, _, _) :-
     FinalMin is Min,
     FinalMinCity is MinCity.
 
 % make the instances where checkIfMin Fails.
 % or change checkIfMin that calls two different
 % version of two_pointer
-two_pointer(Cities, Cars, [HD|TL], NumberOfCities, Min, MinCity
-            , FinalMin, FinalMinCity, Counter, L) :-
+two_pointer(Cities, Cars, [HD|TL], Min, MinCity
+            , FinalMin, FinalMinCity, Counter, L, Sum) :-
     %getNext(TL, MaxPointer, CityAndCars, 1, Distance),
     Counter \= 0,
-    getMax(TL, L, 1, NumberOfCities, NewMax),
+    findMax(TL, L, 1, Cities, NewMax),
     NewSum is Sum + Cars - Cities * HD,
     checkRestriction(NewSum,NewMax),
-    checkIfMin(NewSum, Min),
     NewCounter is Counter + 1,
-    two_pointer(Cities, Cars, TL, NumberOfCities, NewSum, Counter,
-                , FinalMin, FinalMinCity, NewCounter, L).
-
-two_pointer(Cities, Cars, [HD|TL], NumberOfCities, Min, MinCity
-            , FinalMin, FinalMinCity, 0, L) :-
+    checkIfMin(NewSum, Min, MinCity, Cities, Cars, TL, NewSum, Counter
+        , FinalMin, FinalMinCity, NewCounter, L).
+    %NewCounter is Counter + 1,
+    %two_pointer(Cities, Cars, TL, NewSum, Counter,
+    %            , FinalMin, FinalMinCity, NewCounter, L).
+two_pointer(Cities, Cars, [HD|TL], Min, MinCity
+            , FinalMin, FinalMinCity, Counter, L, Sum) :-
     %getNext(TL, MaxPointer, CityAndCars, 1, Distance),
-    findSumAndMax([HD|TL], NumberOfCities, 0 , Max, 0, Sum, 0),
-    checkRestriction(Sum, Max),
-    two_pointer(Cities, Cars, TL, NumberOfCities, Sum, 0,
-                , FinalMin, FinalMinCity, 1, L).
+    Counter \= 0,
+    findMax(TL, L, 1, Cities, NewMax),
+    NewSum is Sum + Cars - Cities * HD,
+    checkRestrictionNot(NewSum,NewMax),
+    NewCounter is Counter + 1,
+    two_pointer(Cities, Cars, TL, Min, MinCity
+                , FinalMin, FinalMinCity, NewCounter, L, NewSum).
 
-round(File) :-
+two_pointer(Cities, Cars, [HD|TL], _, _
+            , FinalMin, FinalMinCity, 0, L, _) :-
+    %getNext(TL, MaxPointer, CityAndCars, 1, Distance),
+    findSumAndMax([HD|TL], Cities, 0 , Max, 0, Sum, 0),
+    checkRestriction(Sum, Max),
+    two_pointer(Cities, Cars, TL, Sum, 0
+                , FinalMin, FinalMinCity, 1, L, Sum).
+
+two_pointer(Cities, Cars, [HD|TL], _, _
+            , FinalMin, FinalMinCity, 0, L, _) :-
+    %getNext(TL, MaxPointer, CityAndCars, 1, Distance),
+    findSumAndMax([HD|TL], Cities, 0 , Max, 0, Sum, 0),
+    checkRestrictionNot(Sum, Max),
+    write(Sum),write(' '),write(Max),
+    two_pointer(Cities, Cars, TL, 10000000, 0
+                , FinalMin, FinalMinCity, 1, L, Sum).
+
+round(File,Min,MinCity) :-
     read_input(File, NumberOfCities, NumberOfCars, CarInCity),
     make_city_list(NumberOfCities, CarInCity, CityAndCars),
-    write(Sum),write(' '),write(Max),write('\n'),
-    two_pointers(NumberOfCities, NumberOfCars, CityAndCars
-                , CityAndCars, NumberOfCities, Min, MinCity
-                , 0, CityAndCars),
-    write(Min),write(' '),write(MinCity).
+    %write(Sum),write(' '),write(Max),write('\n'),
+    two_pointer(NumberOfCities, NumberOfCars, CityAndCars, _, _
+               , Min, MinCity, 0, CityAndCars, _).
+    %write(Min),write(' '),write(MinCity).
     
